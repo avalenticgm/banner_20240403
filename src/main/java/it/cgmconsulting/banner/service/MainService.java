@@ -109,4 +109,11 @@ public class MainService {
         Page<Campaign> campaigns = campaignRepository.findAll(pageable);
         return campaigns.getContent();
     }
+
+    public String getBanner(String id){
+        String banner = campaignRepository.getBanner(id, LocalDate.now());
+        if(banner != null)
+            return path+banner;
+        return null;
+    }
 }

@@ -59,6 +59,7 @@ logging:
 
 # CUSTOM PROPERTIES
 application:
+  token: 8jerXngiqt438G43ignu9tg984h3gE9842A5tj8g2n9uWh2895hgNn952MinM7
   image:
     banner:
       # 50kb = 1024 byte * 50

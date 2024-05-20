@@ -44,7 +44,6 @@ public class BannerFilter extends OncePerRequestFilter {
                 return;
             }
         }
-
         filterChain.doFilter(request, response);
     }
 

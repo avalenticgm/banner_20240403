@@ -3,6 +3,7 @@ package it.cgmconsulting.banner.controller;
 import it.cgmconsulting.banner.entity.Campaign;
 import it.cgmconsulting.banner.entity.Company;
 import it.cgmconsulting.banner.service.MainService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -83,8 +84,11 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    @GetMapping("/api/campaigns/{id}")
-    public ResponseEntity<?> getBanner(@PathVariable String id){
-        return ResponseEntity.status(HttpStatus.OK).body("tutto a posto");
+    @GetMapping("/api/campaigns")
+    public ResponseEntity<?> getBanner(@RequestHeader("Authorization") String id){
+        String banner = mainService.getBanner(id);
+        if(banner != null)
+            return ResponseEntity.status(HttpStatus.OK).body(banner);
+        return ResponseEntity.status(404).body(null);
     }
 }
