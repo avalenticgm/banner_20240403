@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -94,8 +91,22 @@ public class MainService {
                 .startDate(startDate)
                 .build();
         campaignRepository.save(campaign);
+
+        if(!imageService.uploadImage(file, campaign.getId(), path)){
+            response.put(false, "Something went wrong uploading the image");
+            return response;
+        }
+
+        campaign.setImage(path+campaign.getImage());
         response.put(true, campaign);
 
         return response;
+    }
+
+    public List<Campaign> getCampaigns(int pageNumber, int pageSize, String sortBy, String direction) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,
+                Sort.Direction.valueOf(direction.toUpperCase()), sortBy);
+        Page<Campaign> campaigns = campaignRepository.findAll(pageable);
+        return campaigns.getContent();
     }
 }

@@ -49,6 +49,19 @@ public class ImageService {
              return  Arrays.stream(extensions).anyMatch(ext::equalsIgnoreCase);
         } else
             return false;
+    }
+
+    protected boolean uploadImage(MultipartFile file, String campaignId, String path){
+        String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
+        String filename = campaignId+"."+ext;
+
+        Path p = Paths.get(path+filename);
+        try{
+            Files.write(p, file.getBytes());
+        } catch (Exception e){
+            return false;
         }
+        return true;
+    }
 
 }
